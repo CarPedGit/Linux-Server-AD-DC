@@ -1,0 +1,28 @@
+site_name: Instalación Debian
+
+#directorio donde ubicamos el fichero en markdown
+docs_dir: "md"
+
+#directorio donde almacena la web para publicar
+site_dir: "docs"
+
+#tema predefinido : mkdocs, readthedocs
+#tema material, tema descargado
+theme: material
+#para modificar el tema, ayuda github de material
+#extra_css:
+#  - stylesheets/extra.css
+
+nav:
+    - Home: index.md
+    - UD7 Instalción Debian:
+      - Introducción: intro.md
+      - Requerimientos: requerimientos.md
+      - Configuración Máquina Virtual: confMV.md
+      - Instalación: install.md
+      - Logical Volume Manager: LVM.md
+    - About: about.md
+
+#awesomebox modificar .md para que funciones 
+markdown_extensions:
+  - admonition

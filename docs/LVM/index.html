@@ -1,0 +1,682 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../install/">
+      
+      
+        <link rel="next" href="../about/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.14">
+    
+    
+      
+        <title>Logical Volume Manager - Instalación Debian</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.113286f1.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#logical-volume-manager-lvm" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Instalación Debian" class="md-header__button md-logo" aria-label="Instalación Debian" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Instalación Debian
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Logical Volume Manager
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Instalación Debian" class="md-nav__button md-logo" aria-label="Instalación Debian" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Instalación Debian
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          UD7 Instalción Debian
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          UD7 Instalción Debian
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intro/" class="md-nav__link">
+        Introducción
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../requerimientos/" class="md-nav__link">
+        Requerimientos
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../confMV/" class="md-nav__link">
+        Configuración Máquina Virtual
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install/" class="md-nav__link">
+        Instalación
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Logical Volume Manager
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Logical Volume Manager
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#instalar-un-disco-duro" class="md-nav__link">
+    Instalar un disco duro.
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aumentar-el-volumennuevo-disco" class="md-nav__link">
+    Aumentar el volumen.Nuevo disco.
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crear-particion" class="md-nav__link">
+    Crear partición
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anadir-a-un-volumen-existente" class="md-nav__link">
+    Añadir a un volumen existente
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        About
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#instalar-un-disco-duro" class="md-nav__link">
+    Instalar un disco duro.
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aumentar-el-volumennuevo-disco" class="md-nav__link">
+    Aumentar el volumen.Nuevo disco.
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crear-particion" class="md-nav__link">
+    Crear partición
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anadir-a-un-volumen-existente" class="md-nav__link">
+    Añadir a un volumen existente
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="logical-volume-manager-lvm">Logical Volume Manager (LVM).</h1>
+<p>Para nuestro objetivo de crear un dominio y gestionar un active directory en nuestro Debian, vamos a añadir un disco duro adicional donde vamos a crear los recursos que vamos a compartir en nuestro dominio.</p>
+<p>Con esto la idea de esta unidad es añadir un disco duro para el uso de nuestros recursos. Este disco duro lo vamos a crear como un volumen (LVM). Esto nos va a permitir poder en un futuro aumentar su tamaño en caso de que este se nos quede sin espacio, sin necesidad de cambiar el disco duro, sino simplemente añadiendo otro dispositivo físico y anexándolo al volumen creado. La idea es tener un volumen lógico formado por varios volúmenes físicos. Como se puede ver en la siguiente imagen.</p>
+<p><img alt="Imagen LVM. Fuente Wikipedia" src="../img/LVM.jpg" /></p>
+<h2 id="instalar-un-disco-duro">Instalar un disco duro.</h2>
+<p>Vamos a instalar un disco duro en nuestra máquina. El disco duro puede ser tanto físico como virtual. En nuestro caso lo vamos a instalar un disco virtual en nuestra máquina. Para ello tendremos la máquina parada, para proceder a añadir el disco.
+Seleccionaremos los "Settings" de nuestra máquina u "Opciones" y procederemos a añadir un nuevo componente hardware.</p>
+<div class="admonition note">
+<p class="admonition-title">Nota: Del mismo modo que lo hicimos anteriormente, pero en este crear un disco nuevo.</p>
+</div>
+<p>Una vez seleccionado el dispositivo "Hard Disk" o disco duro, vamos a proceder a su instalación. Seleccionamos el tipo de disco que nos recomienda, en este caso SCSI o SAS. Pulsamos "Next/Siguiente" y seleccionamos crear un nuevo disco.</p>
+<p><img alt="Imagen Crear Disco" src="../img/crearDisco.png" /></p>
+<p>Le vamos a asignar 5 GB de espacio al nuevo disco y que se almacene en un solo fichero. Luego nos pedirá el nombre del fichero que va a almacenar los datos en la máquina virtual. En mi caso le he puesto el nombre de "Datos_1.vdi". Este fichero se almacenará en el directorio donde están todos los ficheros de configuración de la máquina virtual.</p>
+<p>Ya tenemos el disco duro en nuestra máquina.</p>
+<p>Ponemos la máquina en marcha e introducimos nuestro usuario/password, que en nuestro caso es: profesor/profesor.</p>
+<p>Una vez dentro de nuestro sistema operativo nos pondremos como usuario root.</p>
+<pre><code>$ su -
+</code></pre>
+<div class="admonition danger">
+<p class="admonition-title">Importante: No es lo mismo $ su root que $ su -root</p>
+</div>
+<p><img alt="Imagen Root" src="../img/usuRoot.png" /></p>
+<p>Vamos a empezar por ver si nuestro disco duro lo ha reconocido el sistema operativo.</p>
+<pre><code># fdisk -l
+</code></pre>
+<p>Sí que lo ha reconocido, pero aparece sin una tabla de particiones válida. En nuestro caso lo ha denominado "/dev/sdb".</p>
+<p>Vamos por buen camino. Ahora toca crear una partición en nuestro dísco duro "/dev/sdb", para ello vamos a usar el siguiente comando:</p>
+<pre><code># fdisk /dev/sdb
+</code></pre>
+<p>En el se puede ver el inicio de la creación de la partición en nuestro disco duro.</p>
+<ul>
+<li>Pulsado la tecla "m", veremos todas las opciones diponibles.</li>
+<li>Nuestra primera orden será "n", para crear la partición.</li>
+</ul>
+<p>Despues de pulsar "Intro", nos pedirá los siguientes datos:</p>
+<ul>
+<li>Tipo de partición: Eligiremos de tipo primaria →  "p".</li>
+<li>Número de partición: No tenemos ninguna partición con lo cual esta será la primera y por ellos elegimos →  "1".</li>
+<li>Primer sector: Introduciremos el primer sector que nos indica en este caso → "2048". (Actualiza valor actualizado si es necesario)</li>
+<li>Último sector: El que nos indica el sistema es este caso → "10485759". (Actualiza valor actualizado si es necesario)</li>
+<li>Para seleccionar el sistema de archivos soportados seleccionaremos "t" y luego "L".</li>
+</ul>
+<p>Aquí nos    muestra todos los sistemas que  soporta;
+* Nosotros seleccionaremos el número hexadecimal →  "83".</p>
+<ul>
+<li>Por último pulsamos "w" para guardar los datos y se creará la partición.</li>
+</ul>
+<p>Si volvemos a ejecutar el comando:</p>
+<pre><code># fdisk -l
+</code></pre>
+<p>Se puede ver que ya tenemos la partición creada, con los datos arriba definidos.</p>
+<p><strong><em>Vamos manos a la obra.</em></strong></p>
+<p>Ahora lo que vamos a hacer es crear un Volumen Lógico. Para ello voy a explicar un poco que se va a hacer. Realmente son 4 pasos, pero es importante el tener claro los conceptos:</p>
+<ul>
+<li><strong>Volumen físico</strong>: Es la partición que vamos a utilizar para crear el volumen lógico.</li>
+<li><strong>Grupo de volúmenes</strong>: Donde se alojarán cada uno de los volúmenes físicos que creemos. En nuestro caso lo denominaremos "almacen".</li>
+<li><strong>Volumen lógico</strong>: La partición lógica que luego montaremos al directorio "/datos". Esta la denominaremos "mis_datos".</li>
+</ul>
+<p>El sistema creará en el directorio <strong>/dev/mapper/</strong> un enlace simbólico, que será la unidad lógica que <em>formatearemos</em> y montaremos en el fichero <em>"fstab"</em>.</p>
+<p>Primero debemos asegurarnos IMPORTANTE, que estemos como root.</p>
+<p>Una vez verificado crearemos el volumen físico en este caso /dev/sdb1. Antes vemos las unidades montadas y no está la nuestra.</p>
+<pre><code># df -h
+</code></pre>
+<p>Creamos el volumen físico. </p>
+<pre><code># pvcreate /dev/sdb1
+</code></pre>
+<p>Ahora pasamos a crear el Grupo de Volúmenes "almacen".</p>
+<pre><code># vgcreate almacen /dev/sdb1
+</code></pre>
+<p>Creado el Grupo de Volúmenes "almacen", vamos a crear el Volumen Lógico "mis_datos" en el grupo "almacen". Le vamos a asignar los 5 GB de tamaño de nuestra partición, pero como siempre hay un poco que se pierde hay que poner un poco menos en nuestro caso 4,99G. IMPORTANTE si el idioma es "Español", el punto decimal es una ",", no un "."</p>
+<pre><code># lvcreate almacen -L 4,99G -n mis_datos
+</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Nota: Pues ya tenemos nuestro LVM creado.</p>
+</div>
+<p>Para comprobar que está creado el nuevo dispositivo, nos vamos a el directorio:</p>
+<pre><code># cd /dev/mapper 
+# ls
+
+</code></pre>
+<p>Aparece el enlace "almacen-mis_datos"</p>
+<p><img alt="Imagen Mapper" src="../img/mapper.png" /></p>
+<p>Ahora solo nos queda el formatearlo con el sistema de ficheros ext4 y luego montarlo en el fichero fstab.</p>
+<pre><code># mkfs.ext4 /dev/mapper/almacen-mis_datos
+</code></pre>
+<p><img alt="Imagen mkfs Mapper" src="../img/mkfs_Mapper.png" /></p>
+<p>Como se puede ver en la imagen si hacemos un "ls -l", podemos ver que cada uno de los volumenes montados tiene asociado en "dev" una unidad, en nuestro caso la "dm-0"</p>
+<p><img alt="Imagen ls -l mapper" src="../img/mapper_2.png" /></p>
+<div class="admonition warning">
+<p class="admonition-title">IMPORTANTE: Antes de montar de forma automática el fichero en el fichero <strong>fstab</strong>, es importante hacer una cópia del original.</p>
+</div>
+<p>Solo nos queda por último modificar el fichero fstab y comprobar al reiniciar que se ha montado automáticamente la partición.
+El editor que usamos para editar ficheros es "nano", para poder editar el fichero fstab, se tiene que estar como root  o utilizar el comando "sudo", en nuestro caso ya estamos como root.</p>
+<p>Hay que añadir la última línea. </p>
+<ul>
+<li>Sistema de ficheros: He puesto el dispositivo directamente "/dev/dm-2", pero se podría poner "/dev/mapper/almacen- mis_datos".</li>
+<li>Punto de montaje: "/datos". El directorio que hemos creado para ello.</li>
+<li>Tipo: En nuestro caso  "ext4". Es el sistema con el que hemos formateado el volumen.</li>
+<li>Opciones: "defaults". Las opciones predeterminadas para ext4 son: rw, suid, dev, exec, auto, nouser, async.</li>
+<li>Dump: Utilizado por el programa dump («volcado») para decidir cuándo hacer una copia de seguridad. Dump comprueba la entrada en el archivo fstab y el número de la misma le indica si un sistema de archivos debe ser respaldado o no. La entradas posibles son 0 y 1. Si es 0, dump ignorará el sistema de archivos, mientras que si el valor es 1, dump hará una copia de seguridad. La mayoría de los usuarios no tendrán dump instalado, por lo que deben poner el valor 0 para la entrada <em>dump</em>. Yo he elegido "1".</li>
+<li>Pass: Utilizado por fsck para decidir el orden en el que los sistemas de archivos serán comprobados. Las entradas posibles son 0, 1 y 2. El sistema de archivos raíz («root») debe tener la más alta prioridad: 1 -todos los demás sistemas de archivos que desea comprobar deben tener un 2-. La utilidad fsck no comprobará los sistemas de archivos que vengan ajustados con un valor 0 en <em>pass</em>.</li>
+</ul>
+<p>Crearemos una carpeta donde montaremos nuestro volumen lógico.</p>
+<pre><code># mkdir /datos
+# nano /etc/fstab
+
+</code></pre>
+<p><img alt="Imagen fstab" src="../img/fstab_1.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Anotación: Quizás esta configuración <strong>NOS</strong> de un error, <strong><em>A BUSCAR UNA SOLUCIÓN!!</em></strong></p>
+</div>
+<p>Guardamos el fichero, reiniciamos y comprobamos si está todo correcto con:</p>
+<pre><code># df -h
+</code></pre>
+<p><img alt="Imagen Volumen montado" src="../img/lsblk.png" /></p>
+<p>El volumen lógico tiene un enlace a la unidad"/dev/dm-2", veremos como la tenemos montada como;
+ "/dev/mapper/almacen-mis_datos"</p>
+<p><strong><em>Crearemos un fichero de prueba</em></strong></p>
+<p>Arrancamos la máquina virtual y nos validamos.</p>
+<p>Lo primero que vamos a hacer en ir al directorio "/datos", validarnos como "root" y luego crear el fichero "archivo.txt" y escribir un texto en  su interior, para ello utilizaremos el programa "nano". Los comandos utilizados:</p>
+<pre><code>$ su -
+
+# touch archivo.txt 
+
+# nano archivo.txt
+</code></pre>
+<p>Escribir el texto: "Mi primer texto en este volumen" </p>
+<pre><code># cat archivo.txt
+</code></pre>
+<p>Para poder ver el contenido guardado.</p>
+<p><img alt="Imagen Fichero" src="../img/fichero.png" /></p>
+<h2 id="aumentar-el-volumennuevo-disco">Aumentar el volumen.Nuevo disco.</h2>
+<p>Aumentar el volumen, no tiene nada que ver con la báscula.
+A lo que me refiero con aumentar el volumen es a que de repente aparece un disco duro por ahí escondido y queremos darle una utilidad. Una de las utilidades que le vamos a dar es la de aumentar nuestro volumen de 5 GB, sin perder información.
+Lo que hemos encontrado es un disco duro de 7GB que vamos a añadir a nuestro volumen lógico "mis_datos". Para al final tener un volumen de 12GB compuesto por dos discos físicos.</p>
+<p><img alt="Imagen Nuevo Volumen" src="../img/nuevoVolumen.png" />{width=50%}</p>
+<p>Lo primero que vamos a hacer es conectar nuestro disco duro a nuestro ordenador. En nuestro caso simplemente es añadir un <strong>nuevo</strong> disco duro de 7GB a nuestra máquina virtual. En mi caso le he denominado "Datos_2.vdi".</p>
+<h2 id="crear-particion">Crear partición</h2>
+<p>Vamos a crear una partición en el nuevo disco.
+Primero tenemos que ver como se denomina este nuevo disco, para saber que punto de montaje le ha dado Ubuntu. En este caso "/dev/sdbc".</p>
+<p>Ejecutaremos </p>
+<pre><code># fdisk -l
+</code></pre>
+<p>A continuación realizaremos los mismos pasos que en el disco anterior de 5GB.</p>
+<pre><code># fdisk /dev/sdbc → Para crear la partición.
+</code></pre>
+<p>@ Pulsamos n → Para añadir una nueva partición. 
+@ Pulsamos p → Para indicar que es primaria.
+@ Pulsamos 1 → Para indicar que es la primera.
+@ Introducimos el primer y últimos sector de nuestro disco. @ En orden: Introducimos "t"
+@ Pulsamos L → Para seleccionar el número de partición.</p>
+<p>Como el caso anterior elegimos el código hexadecimal "83" que hace referencia a "Linux" y por último
+@ Pulsamos w → Para guardar los cambios.</p>
+<h2 id="anadir-a-un-volumen-existente">Añadir a un volumen existente</h2>
+<p>Ya tenemos la partición ahora nos queda simplemente añadirla al grupo de volúmenes, al volumen lógico y ampliar el volumen.
+Primero vamos a crear el volumen físico. </p>
+<pre><code># pvcreate /dev/sdc1
+</code></pre>
+<p>A continuación añadimos a nuestro grupo de volúmenes "almacen", el volumen físico. Este grupo ya existe.</p>
+<pre><code># vgextend almacen /dev/sdc1
+</code></pre>
+<p><img alt="Imagen Volumen Extendido" src="../img/extend.png" /></p>
+<p>Ahora nos queda "extender" el volumen lógico. A este le añadimos el espacio de nuestro volumen físico "/dev/sdc1" que queramos. En nuestro caso le vamos a añadir los 7GB que contenía el disco. Si ha ido bién nos informará del nuevo tamaño de nuestro volumen lógico "mis_datos", que es de unos 12GB. Para hacer referencia a este volumen lógico voy a utilizar otro posible enlace en "/dev/almacen/mis_datos".</p>
+<pre><code># lvextend -L +7G /dev/almacen/mis_datos
+</code></pre>
+<p><img alt="Imagen Disco Extendido" src="../img/extend_2.png" /></p>
+<p>Bien, parece que ya está todo hecho, así que vamos a hacer una pequeña comprobación de que todo está bien, para ello ejecutamos nuestro comando.</p>
+<pre><code># df -h
+</code></pre>
+<p>Y nos dará una sorpresa, que el punto de montaje sigue siendo de unos 5G, como se muestra en la imagen.</p>
+<p><img alt="Imagen No Extendida" src="../img/df_noCorrecta.png" /></p>
+<p>Lo que ha ocurrido es que, si bien el volumen ya cuenta con una mayor capacidad de almacenamiento, el sistema de archivos que se creó está limitando el tamaño del mismo. Por ello, es necesario extender el sistema de archivos existente. Este paso se realizará on-line, es decir, sin desmontar el volumen.</p>
+<p>Vamos a realizar una serie de pasos, redimensionar el sistema de archivos, volver a comprobar los puntos de montajes y confirmar que el fichero que habiamos dejado al principio sigue ahí, es decir, la información no se ha borrado.</p>
+<pre><code># resize2fs /dev/almacen/mis_datos
+
+# df -h
+# cat /datos/archivo.txt
+</code></pre>
+<p><img alt="Imagen No Extendida" src="../img/df_correcta.png" /></p>
+<p>Vamos a ejecutar una serie de comandos para comprobar que todo está correcto y listo para el siguiente punto.</p>
+<pre><code># lsblk -f → Para ver el árbol de volúmenes 
+
+# vgs → Para ver los grupos de volúmenes
+
+# lvs → Para ver los volúmenes lógicos y su tamaño.
+</code></pre>
+<p><img alt="Imagen lsblk" src="../img/lsblk_f.png" /></p>
+<p>Por último vamos a cambiar en el fichero "/etc/fstab" el punto de montaje y vamos a dejar el de "/dev/mapper/almacen-mis_datos" en vez de "/dev/dm-0".</p>
+<p><img alt="Imagen fstab Final" src="../img/fstab_final.png" /></p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.2a6f1dda.min.js"></script>
+      
+    
+  </body>
+</html>
